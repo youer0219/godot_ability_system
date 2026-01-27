@@ -1,0 +1,11 @@
+[gd_resource type="ShaderMaterial" load_steps=2 format=3 uid="uid://br75uh6cdvax4"]
+
+[ext_resource type="Shader" uid="uid://cnawx7545pns" path="res://addons/gameplay_abiltiy_system/assets/shaders/ghost_trail.gdshader" id="1_3vpan"]
+
+[resource]
+render_priority = 0
+shader = ExtResource("1_3vpan")
+shader_parameter/albedo = Color(0, 0.8, 1, 0.8)
+shader_parameter/alpha_factor = 1.0
+shader_parameter/fresnel_power = 3.0
+shader_parameter/emission_strength = 1.5

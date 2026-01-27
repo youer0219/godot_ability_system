@@ -1,0 +1,10 @@
+[gd_resource type="ShaderMaterial" load_steps=2 format=3 uid="uid://cnd6cut0opag7"]
+
+[ext_resource type="Shader" uid="uid://dpfbfkrf7ecs1" path="res://addons/gameplay_abiltiy_system/assets/shaders/circular_progress.gdshader" id="1_kiuib"]
+
+[resource]
+resource_local_to_scene = true
+shader = ExtResource("1_kiuib")
+shader_parameter/value = 0.5210000247475
+shader_parameter/bg_color = Color(0, 0, 0, 0.72700006)
+shader_parameter/rotation_offset_deg = -90.0
