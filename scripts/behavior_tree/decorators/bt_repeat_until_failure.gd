@@ -1,10 +1,10 @@
-extends BTDecorator
+extends GameplayAbilitySystem.BTDecorator
 class_name BTRepeatUntilFailure
 
 ## 完成时返回 SUCCESS 还是 FAILURE
 @export var return_success: bool = true
 
-func _tick_decorator(instance: BTInstance, delta: float) -> int:
+func _tick_decorator(instance: GameplayAbilitySystem.BTInstance, delta: float) -> int:
 	if not is_instance_valid(child):
 		return Status.FAILURE
 		

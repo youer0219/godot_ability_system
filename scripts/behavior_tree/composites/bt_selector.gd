@@ -1,7 +1,7 @@
-extends BTComposite
+extends GameplayAbilitySystem.BTComposite
 class_name BTSelector
 
-func _tick(instance: BTInstance, delta: float) -> int:
+func _tick(instance: GameplayAbilitySystem.BTInstance, delta: float) -> int:
 	var current_index = _get_storage(instance, 0)
 	for i in range(current_index, children.size()):
 		var child = children[i]

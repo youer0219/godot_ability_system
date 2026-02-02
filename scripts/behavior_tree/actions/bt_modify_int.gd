@@ -1,4 +1,4 @@
-extends BTAction
+extends GameplayAbilitySystem.BTAction
 class_name BTModifyInt
 
 enum Operation { 
@@ -11,7 +11,7 @@ enum Operation {
 @export var value: int = 1
 @export var operation: Operation = Operation.ADD
 
-func _tick(instance: BTInstance, delta: float) -> int:
+func _tick(instance: GameplayAbilitySystem.BTInstance, delta: float) -> int:
 	var current_val: int = _get_var(instance, variable_key, 0)
 	match operation:
 		Operation.SET: current_val = value

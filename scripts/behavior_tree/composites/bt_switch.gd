@@ -1,9 +1,9 @@
-extends BTComposite
+extends GameplayAbilitySystem.BTComposite
 class_name BTSwitch
 
 @export var variable_key: String = ""
 
-func _tick(instance: BTInstance, delta: float) -> int:
+func _tick(instance: GameplayAbilitySystem.BTInstance, delta: float) -> int:
 	if variable_key.is_empty():
 		push_warning("BTSwitch: variable key is empty!")
 		return Status.FAILURE

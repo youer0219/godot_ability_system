@@ -25,7 +25,7 @@ class_name AbilityNodeApplyCost
 ## Vital 组件名称（用于查找组件）
 @export var vital_comp_name: StringName = &"GameplayVitalAttributeComponent"
 
-func _tick(instance: BTInstance, delta: float) -> int:
+func _tick(instance: GameplayAbilitySystem.BTInstance, delta: float) -> int:
 	if not _validate_context(instance, "AbilityNodeApplyCost"):
 		return Status.FAILURE
 

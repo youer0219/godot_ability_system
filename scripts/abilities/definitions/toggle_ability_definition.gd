@@ -49,7 +49,7 @@ Root Sequence
 @export var icon_when_active: Texture = null
 
 ## 缓存的默认行为树（所有实例共享，避免重复构建）
-var _cached_default_tree: BTNode = null
+var _cached_default_tree: GameplayAbilitySystem.BTNode = null
 
 ## 重写基类的工厂方法
 ## 在创建实例时自动注入 Feature 和构建行为树（不修改 Definition，避免资源污染）
@@ -77,7 +77,7 @@ func create_instance(owner: Node) -> GameplayAbilityInstance:
 
 ## 获取执行树（优先使用用户配置，否则使用缓存的默认树）
 ## 符合享元模式：所有实例共享同一个行为树
-func _get_execution_tree() -> BTNode:
+func _get_execution_tree() -> GameplayAbilitySystem.BTNode:
 	# 如果用户手动配置了，使用用户的
 	if is_instance_valid(execution_tree):
 		return execution_tree
@@ -90,10 +90,10 @@ func _get_execution_tree() -> BTNode:
 	_cached_default_tree = _build_default_behavior_tree()
 	return _cached_default_tree
 
-## 动态构建行为树结构 (构建的是 BTNode 资源图，而不是 Instance)
-func _build_default_behavior_tree() -> BTNode:
+## 动态构建行为树结构 (构建的是 GameplayAbilitySystem.BTNode 资源图，而不是 Instance)
+func _build_default_behavior_tree() -> GameplayAbilitySystem.BTNode:
 	var sequence = BTSequence.new()
-	var nodes: Array[BTNode] = []
+	var nodes: Array[GameplayAbilitySystem.BTNode] = []
 
 	# 1. 播放动画（异步，不等待）
 	if not animation_name.is_empty():

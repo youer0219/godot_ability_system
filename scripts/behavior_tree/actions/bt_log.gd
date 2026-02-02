@@ -1,4 +1,4 @@
-extends BTAction
+extends GameplayAbilitySystem.BTAction
 class_name BTLog
 
 enum LogLevel {
@@ -15,7 +15,7 @@ enum LogLevel {
 ## [配置] 日志级别
 @export var level: LogLevel = LogLevel.INFO
 
-func _tick(instance: BTInstance, delta: float) -> int:
+func _tick(instance: GameplayAbilitySystem.BTInstance, delta: float) -> int:
 	# 1. 组装基础消息：[谁] 说了什么
 	var final_msg = "[%s] %s" % [instance.agent.name, message]
 	# 2. 如果配置了 Key，尝试从黑板获取值并追加到消息后
