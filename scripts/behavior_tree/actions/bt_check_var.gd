@@ -1,4 +1,4 @@
-extends GameplayAbilitySystem.BTAction
+extends GAS_BTAction
 class_name GAS_BTCheckVar
 
 @export var key: String = ""
@@ -6,7 +6,7 @@ class_name GAS_BTCheckVar
 # 只检查参数是否存在
 @export var check_exist_only: bool = false
 
-func _tick(instance: GameplayAbilitySystem.BTInstance, delta: float) -> int:
+func _tick(instance: GAS_BTInstance, delta: float) -> int:
 	if key.is_empty():
 		push_warning("BTCheckVarAction: key is empty!")
 		return Status.FAILURE

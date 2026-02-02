@@ -10,7 +10,7 @@ class_name ComboAbilityDefinition
 
 ## 缓存的默认行为树（所有实例共享，避免重复构建）
 ## 只在第一次创建实例时构建，之后所有实例共享
-var _cached_combo_tree: GameplayAbilitySystem.BTNode = null
+var _cached_combo_tree: GAS_BTNode = null
 
 """
 Root Sequence
@@ -64,8 +64,8 @@ func create_instance(owner: Node) -> GameplayAbilityInstance:
 
 ## 获取执行树（优先使用用户配置，否则使用缓存的默认树）
 ## 符合享元模式：所有实例共享同一个行为树
-## [return] GameplayAbilitySystem.BTNode 执行树
-func _get_execution_tree() -> GameplayAbilitySystem.BTNode:
+## [return] GAS_BTNode 执行树
+func _get_execution_tree() -> GAS_BTNode:
 	# 如果用户手动配置了，使用用户的
 	if is_instance_valid(execution_tree):
 		return execution_tree
@@ -161,7 +161,7 @@ func _validate_configuration() -> void:
 		if not is_instance_valid(step):
 			push_warning("ComboAbilityDefinition [%s]: combo_steps[%d] 无效" % [ability_id, i])
 
-func _build_combo_tree() -> GameplayAbilitySystem.BTNode:
+func _build_combo_tree() -> GAS_BTNode:
 	# --- 最外层 Sequence ---
 	# 结构: [Cost -> RepeatUntilFailure(Switch) -> Cooldown]
 	var root_sequence = GAS_BTSequence.new()
@@ -182,7 +182,7 @@ func _build_combo_tree() -> GameplayAbilitySystem.BTNode:
 	switch_node.node_id = "combo_switch"
 	# 注意：GAS_BTSwitch 只负责根据索引选择子节点，不处理超时逻辑
 	# 超时由连击段内部的 GAS_BTWaitSignal 返回 FAILURE 来处理
-	var switch_children: Array[GameplayAbilitySystem.BTNode] = []
+	var switch_children: Array[GAS_BTNode] = []
 	
 	for i in range(combo_steps.size()):
 		var step_def = combo_steps[i]
@@ -274,13 +274,13 @@ func _build_combo_tree() -> GameplayAbilitySystem.BTNode:
 	return root_sequence
 
 ## 递归移除行为树中的冷却节点（用于连击段）
-func _remove_cooldown_nodes(node: GameplayAbilitySystem.BTNode) -> void:
+func _remove_cooldown_nodes(node: GAS_BTNode) -> void:
 	if not is_instance_valid(node):
 		return
 
 	# 如果是组合节点，递归处理子节点
-	if node is GameplayAbilitySystem.BTComposite:
-		var composite = node as GameplayAbilitySystem.BTComposite
+	if node is GAS_BTComposite:
+		var composite = node as GAS_BTComposite
 		# 从后往前遍历，避免删除时索引问题
 		for i in range(composite.children.size() - 1, -1, -1):
 			var child = composite.children[i]
@@ -290,8 +290,8 @@ func _remove_cooldown_nodes(node: GameplayAbilitySystem.BTNode) -> void:
 			else:
 				# 递归处理子节点
 				_remove_cooldown_nodes(child)
-	elif node is GameplayAbilitySystem.BTDecorator:
-		var decorator = node as GameplayAbilitySystem.BTDecorator
+	elif node is GAS_BTDecorator:
+		var decorator = node as GAS_BTDecorator
 		if is_instance_valid(decorator.child):
 			if decorator.child is AbilityNodeCommitCooldown:
 				# 如果装饰器的子节点是CD节点，移除它（这通常不会发生，但为了安全）

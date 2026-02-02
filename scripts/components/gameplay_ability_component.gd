@@ -236,7 +236,7 @@ func cancel_ability(ability_id: StringName = &"", context: Dictionary = {}) -> v
 	if not is_instance_valid(ability_instance):
 		return
 
-	ability_instance.end_ability(GameplayAbilitySystem.BTNode.Status.FAILURE)
+	ability_instance.end_ability(GAS_BTNode.Status.FAILURE)
 	AbilityEventBus.trigger_game_event(&"ability_cancelled", {
 		"entity": get_parent(),
 		"ability_id": target_id

@@ -1,7 +1,7 @@
-extends GameplayAbilitySystem.BTComposite
+extends GAS_BTComposite
 class_name GAS_BTSequence
 
-func _tick(instance: GameplayAbilitySystem.BTInstance, delta: float) -> int:
+func _tick(instance: GAS_BTInstance, delta: float) -> int:
 	# 1. 获取上次运行到的索引 (默认为 0)
 	var current_index = _get_storage(instance, 0)
 

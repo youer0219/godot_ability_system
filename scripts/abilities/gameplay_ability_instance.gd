@@ -6,8 +6,8 @@ class_name GameplayAbilityInstance
 var _owner: Node
 var _definition: GameplayAbilityDefinition
 var _features: Dictionary[String, GameplayAbilityFeature] = {}
-var _bt_instance : GameplayAbilitySystem.BTInstance = null
-var _blackboard: GameplayAbilitySystem.BTBlackboard = null
+var _bt_instance : GAS_BTInstance = null
+var _blackboard: GAS_BTBlackboard = null
 
 # 【核心状态】技能是否正在执行（行为树是否在跑）
 var is_active: bool = false
@@ -27,11 +27,11 @@ func _init(owner: Node, definition: GameplayAbilityDefinition) -> void:
 	_owner = owner
 	_definition = definition
 	# 初始化行为树黑板
-	_blackboard = GameplayAbilitySystem.BTBlackboard.new()
+	_blackboard = GAS_BTBlackboard.new()
 	_blackboard.value_changed.connect(_on_blackboard_value_changed)
 	_blackboard.set_var("ability_instance", self)
 	if is_instance_valid(_definition.execution_tree):
-		_bt_instance = GameplayAbilitySystem.BTInstance.new(_owner, _definition.execution_tree, _blackboard)
+		_bt_instance = GAS_BTInstance.new(_owner, _definition.execution_tree, _blackboard)
 	#else:
 		#push_warning("AbilityInstance: execution_tree is not valid!")
 
@@ -105,11 +105,11 @@ func update(delta: float) -> void:
 	# 更新行为树
 	if is_active and is_instance_valid(_bt_instance):
 		var result = _bt_instance.tick(delta)
-		if result != GameplayAbilitySystem.BTNode.Status.RUNNING:
+		if result != GAS_BTNode.Status.RUNNING:
 			end_ability(result)
 
 ## 结束技能
-func end_ability(final_status: int = GameplayAbilitySystem.BTNode.Status.SUCCESS) -> void:
+func end_ability(final_status: int = GAS_BTNode.Status.SUCCESS) -> void:
 	if not is_active: return
 
 	is_active = false
@@ -186,10 +186,10 @@ func handle_forgotten(ability_comp: Node,) -> void:
 		feature.on_forgotten(self, ability_comp)
 
 #region ========== 行为树管理 ==========
-func get_bt_instance() -> GameplayAbilitySystem.BTInstance:
+func get_bt_instance() -> GAS_BTInstance:
 	return _bt_instance
 
-func get_blackboard() -> GameplayAbilitySystem.BTBlackboard:
+func get_blackboard() -> GAS_BTBlackboard:
 	return _blackboard
 
 func set_blackboard_var(key: String, value: Variant) -> void:

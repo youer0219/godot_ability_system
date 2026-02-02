@@ -25,7 +25,7 @@ class_name GameplayAbilityDefinition
 
 @export_group("Behavior Logic")
 ## 核心行为树 (描述技能的具体执行流程)
-@export var execution_tree: GameplayAbilitySystem.BTNode
+@export var execution_tree: GAS_BTNode
 
 ## 黑板默认数据 (配置参数)
 ## 这里填写的 Key-Value 会在技能实例化时自动注入到黑板中

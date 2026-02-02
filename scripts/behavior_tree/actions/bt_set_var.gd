@@ -1,4 +1,4 @@
-extends GameplayAbilitySystem.BTAction
+extends GAS_BTAction
 class_name GAS_BTSetVar
 
 ## 设置黑板变量节点
@@ -16,7 +16,7 @@ class_name GAS_BTSetVar
 @export var variable_key: String = ""   ## 变量键
 @export var value: Variant        ## 要设置的值（支持任意类型）
 
-func _tick(instance: GameplayAbilitySystem.BTInstance, delta: float) -> int:
+func _tick(instance: GAS_BTInstance, delta: float) -> int:
 	if variable_key.is_empty():
 		push_warning("GAS_BTSetVar: variable_key is empty!")
 		return Status.FAILURE

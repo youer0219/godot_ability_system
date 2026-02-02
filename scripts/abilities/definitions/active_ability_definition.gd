@@ -28,7 +28,7 @@ class_name ActiveAbilityDefinition
 @export var input_action : StringName = &""
 
 ## 缓存的默认行为树（所有实例共享，避免重复构建）
-var _cached_default_tree: GameplayAbilitySystem.BTNode = null
+var _cached_default_tree: GAS_BTNode = null
 
 ## 重写基类的工厂方法
 func create_instance(owner: Node) -> GameplayAbilityInstance:
@@ -42,7 +42,7 @@ func create_instance(owner: Node) -> GameplayAbilityInstance:
 	return instance
 
 ## 获取执行树（优先使用用户配置，否则使用缓存的默认树）
-func _get_execution_tree() -> GameplayAbilitySystem.BTNode:
+func _get_execution_tree() -> GAS_BTNode:
 	if is_instance_valid(execution_tree):
 		return execution_tree
 	if is_instance_valid(_cached_default_tree):
@@ -50,10 +50,10 @@ func _get_execution_tree() -> GameplayAbilitySystem.BTNode:
 	_cached_default_tree = _build_default_behavior_tree()
 	return _cached_default_tree
 
-## 动态构建行为树结构 (构建的是 GameplayAbilitySystem.BTNode 资源图，而不是 Instance)
-func _build_default_behavior_tree(include_cooldown: bool = true, include_cost: bool = true) -> GameplayAbilitySystem.BTNode:
+## 动态构建行为树结构 (构建的是 GAS_BTNode 资源图，而不是 Instance)
+func _build_default_behavior_tree(include_cooldown: bool = true, include_cost: bool = true) -> GAS_BTNode:
 	var sequence = GAS_BTSequence.new()
-	var nodes: Array[GameplayAbilitySystem.BTNode] = []
+	var nodes: Array[GAS_BTNode] = []
 
 	# 1. 播放动画 (异步，不等待)
 	if not animation_name.is_empty():
@@ -106,7 +106,7 @@ func _build_default_behavior_tree(include_cooldown: bool = true, include_cost: b
 	sequence.node_id = "ability_sequence"
 	return sequence
 
-func _build_effect_nodes() -> GameplayAbilitySystem.BTNode:
+func _build_effect_nodes() -> GAS_BTNode:
 	if not effects.is_empty():
 		var effect_node = AbilityNodeApplyEffect.new()
 		effect_node.effects = effects.duplicate()

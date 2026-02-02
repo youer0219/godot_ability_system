@@ -3,13 +3,6 @@ extends Node
 ## 游戏技能系统管理器（单例）
 ## 管理所有战斗相关的实体和组件，提供组件查询接口
 
-const BTNode = preload("res://addons/godot_ability_system/scripts/behavior_tree/bt_node.gd")
-const BTInstance = preload("res://addons/godot_ability_system/scripts/behavior_tree/bt_instance.gd")
-const BTBlackboard = preload("res://addons/godot_ability_system/scripts/behavior_tree/bt_blackboard.gd")
-const BTAction = preload("res://addons/godot_ability_system/scripts/behavior_tree/actions/bt_action.gd")
-const BTComposite = preload("res://addons/godot_ability_system/scripts/behavior_tree/composites/bt_composite.gd")
-const BTDecorator = preload("res://addons/godot_ability_system/scripts/behavior_tree/decorators/bt_decorator.gd")
-
 ## 是否开启智能施法（跳过预览，直接向鼠标位置释放）
 @export var smart_cast: bool = false
 
