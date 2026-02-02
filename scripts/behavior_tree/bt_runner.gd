@@ -1,5 +1,5 @@
 extends Node
-class_name BTRunner
+class_name GAS_BTRunner
 
 const NodeStatus := GameplayAbilitySystem.BTNode.Status
 enum RunnerMode {
@@ -22,7 +22,7 @@ signal tree_finished(result: NodeStatus)
 func _ready() -> void:
 	var agent = get_parent()
 	if not tree_root:
-		push_warning("BTRunner: No Tree Root assigned for " + agent.name)
+		push_warning("GAS_BTRunner: No Tree Root assigned for " + agent.name)
 		active = false
 		return
 

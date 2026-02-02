@@ -1,5 +1,5 @@
-extends BTObserver
-class_name BTCheckVarDecorator
+extends GAS_BTObserver
+class_name GAS_BTCheckVarDecorator
 
 @export var key: String
 @export var value: Variant

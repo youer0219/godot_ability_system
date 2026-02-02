@@ -1,5 +1,5 @@
 extends GameplayAbilitySystem.BTAction
-class_name BTWaitSignal
+class_name GAS_BTWaitSignal
 
 ## 基于观察者模式的等待节点
 ## 职责：挂起行为树，直到收到黑板变量变更通知，或超时

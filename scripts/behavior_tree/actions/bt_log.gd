@@ -1,5 +1,5 @@
 extends GameplayAbilitySystem.BTAction
-class_name BTLog
+class_name GAS_BTLog
 
 enum LogLevel {
 	INFO,

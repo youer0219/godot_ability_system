@@ -1,5 +1,5 @@
 extends GameplayAbilitySystem.BTComposite
-class_name BTSequence
+class_name GAS_BTSequence
 
 func _tick(instance: GameplayAbilitySystem.BTInstance, delta: float) -> int:
 	# 1. 获取上次运行到的索引 (默认为 0)

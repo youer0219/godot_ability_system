@@ -76,20 +76,20 @@ func unregister_observer(observer: GameplayAbilitySystem.BTNode) -> void:
 
 func evaluate_interruption(observer: GameplayAbilitySystem.BTNode, new_status: int):
 	# 这里是基于事件行为树最复杂的地方：判定优先级
-	# 注意：只有 BTObserver 类型的观察者才支持中断逻辑
-	# BTWaitSignal 等节点只监听变化，不触发中断
-	if not observer is BTObserver:
+	# 注意：只有 GAS_BTObserver 类型的观察者才支持中断逻辑
+	# GAS_BTWaitSignal 等节点只监听变化，不触发中断
+	if not observer is GAS_BTObserver:
 		return
 	
-	var bt_observer = observer as BTObserver
+	var bt_observer = observer as GAS_BTObserver
 	match bt_observer.abort_type:
-		BTObserver.AbortType.SELF:
+		GAS_BTObserver.AbortType.SELF:
 			# 如果观察者自己正在运行（是 active_nodes 的一部分）
 			# 且条件变成了 FAILURE，则中断自己
 			if _is_active(observer) and new_status == GameplayAbilitySystem.BTNode.Status.FAILURE:
 				_abort_execution(observer)
 
-		BTObserver.AbortType.LOWER_PRIORITY:
+		GAS_BTObserver.AbortType.LOWER_PRIORITY:
 			# 如果观察者当前没有运行（说明之前的条件是 Failure）
 			# 现在条件变成了 SUCCESS，且当前运行的节点优先级比观察者低
 			# 则中断当前节点，切回观察者所在的分支

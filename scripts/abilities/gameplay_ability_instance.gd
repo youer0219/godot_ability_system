@@ -42,7 +42,7 @@ func get_definition() -> GameplayAbilityDefinition:
 func try_activate(context: Dictionary = {}) -> bool:
 	if is_active:
 		# 如果技能已激活，无论是否允许重新激活，都应该处理连击输入
-		# 触发信号，确保 BTWaitSignal 能够收到通知（用于连击系统）
+		# 触发信号，确保 GAS_BTWaitSignal 能够收到通知（用于连击系统）
 		var current_value = _blackboard.get_var("event_input_received", false)
 		if not current_value:
 			_blackboard.set_var("event_input_received", true)

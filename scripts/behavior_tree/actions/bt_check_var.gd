@@ -1,5 +1,5 @@
 extends GameplayAbilitySystem.BTAction
-class_name BTCheckVar
+class_name GAS_BTCheckVar
 
 @export var key: String = ""
 @export var value: Variant

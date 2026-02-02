@@ -24,7 +24,7 @@ class_name ProjectileAbilityDefinition
 @export var face_target_rotation_speed: float = 12.0
 
 func _build_effect_nodes() -> GameplayAbilitySystem.BTNode:
-	var sequence = BTSequence.new()
+	var sequence = GAS_BTSequence.new()
 	var nodes : Array[GameplayAbilitySystem.BTNode]
 	#  转向目标位置（如果配置了）
 	# 注意：AbilityNodeFaceTarget 会自动从 context.target_position 获取鼠标位置

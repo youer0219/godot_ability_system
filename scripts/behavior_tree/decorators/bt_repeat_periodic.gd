@@ -1,5 +1,5 @@
 extends GameplayAbilitySystem.BTDecorator
-class_name BTRepeatPeriodic
+class_name GAS_BTRepeatPeriodic
 
 @export_group("Periodic Settings")
 ## 周期时间（秒）

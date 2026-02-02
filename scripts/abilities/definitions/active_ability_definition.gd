@@ -52,7 +52,7 @@ func _get_execution_tree() -> GameplayAbilitySystem.BTNode:
 
 ## 动态构建行为树结构 (构建的是 GameplayAbilitySystem.BTNode 资源图，而不是 Instance)
 func _build_default_behavior_tree(include_cooldown: bool = true, include_cost: bool = true) -> GameplayAbilitySystem.BTNode:
-	var sequence = BTSequence.new()
+	var sequence = GAS_BTSequence.new()
 	var nodes: Array[GameplayAbilitySystem.BTNode] = []
 
 	# 1. 播放动画 (异步，不等待)
@@ -65,7 +65,7 @@ func _build_default_behavior_tree(include_cooldown: bool = true, include_cost: b
 
 	# 2. 前摇等待
 	if pre_cast_delay > 0.0:
-		var wait = BTWait.new()
+		var wait = GAS_BTWait.new()
 		wait.duration = pre_cast_delay
 		wait.node_id = "pre_cast_delay"
 		nodes.append(wait)
@@ -96,7 +96,7 @@ func _build_default_behavior_tree(include_cooldown: bool = true, include_cost: b
 
 	# 7. 后摇等待
 	if post_cast_delay > 0.0:
-		var wait = BTWait.new()
+		var wait = GAS_BTWait.new()
 		wait.duration = post_cast_delay
 		wait.node_id = "post_cast_delay"
 		nodes.append(wait)

@@ -1,5 +1,5 @@
 extends GameplayAbilitySystem.BTComposite
-class_name BTSelector
+class_name GAS_BTSelector
 
 func _tick(instance: GameplayAbilitySystem.BTInstance, delta: float) -> int:
 	var current_index = _get_storage(instance, 0)

@@ -1,5 +1,5 @@
 extends GameplayAbilitySystem.BTAction
-class_name BTModifyInt
+class_name GAS_BTModifyInt
 
 enum Operation { 
 	SET,                ## 设置为指定值

@@ -6,7 +6,7 @@ class_name AbilityNodeApplyCost
 ##
 ## 用途：
 ## - 周期性检查并消耗资源（如献祭技能每秒检查并消耗1点生命值）
-## - 与 BTRepeatPeriodic 配合使用
+## - 与 GAS_BTRepeatPeriodic 配合使用
 ##
 ## 注意：
 ## - 先检查是否可以支付消耗，如果可以则支付

@@ -1,5 +1,5 @@
 extends GameplayAbilitySystem.BTAction
-class_name BTSetVar
+class_name GAS_BTSetVar
 
 ## 设置黑板变量节点
 ## 通用的设置黑板变量的节点，支持任意类型的值
@@ -18,7 +18,7 @@ class_name BTSetVar
 
 func _tick(instance: GameplayAbilitySystem.BTInstance, delta: float) -> int:
 	if variable_key.is_empty():
-		push_warning("BTSetVar: variable_key is empty!")
+		push_warning("GAS_BTSetVar: variable_key is empty!")
 		return Status.FAILURE
 
 	# 如果 value 为 null，则清除变量；否则设置变量

@@ -1,5 +1,5 @@
 extends GameplayAbilitySystem.BTAction
-class_name BTWait
+class_name GAS_BTWait
 
 ## 等待时间（秒）
 @export var duration: float = 1.0

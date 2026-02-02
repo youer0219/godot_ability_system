@@ -1,5 +1,5 @@
 extends GameplayAbilitySystem.BTDecorator
-class_name BTRepeatUntilFailure
+class_name GAS_BTRepeatUntilFailure
 
 ## 完成时返回 SUCCESS 还是 FAILURE
 @export var return_success: bool = true

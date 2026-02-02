@@ -1,5 +1,5 @@
 extends GameplayAbilitySystem.BTDecorator
-class_name BTObserver
+class_name GAS_BTObserver
 
 ## 中断类型
 enum AbortType {
