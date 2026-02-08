@@ -14,6 +14,10 @@ enum RunnerMode {
 	set(v):
 		active = v
 		_update_process_mode()
+## 黑板默认数据 (配置参数)
+## 这里填写的 Key-Value 会在技能实例化时自动注入到黑板中
+## 用途：配置 伤害范围、投射物速度、BUFF持续时间 等
+@export var blackboard_defaults: Dictionary = {}
 
 var _instance: GAS_BTInstance
 
@@ -26,7 +30,7 @@ func _ready() -> void:
 		active = false
 		return
 
-	_instance = GAS_BTInstance.new(agent, tree_root)
+	_instance = GAS_BTInstance.new(agent, tree_root, GAS_BTBlackboard.new(blackboard_defaults))
 	_instance.blackboard.set_var("runner_node", self)
 	
 	_update_process_mode()

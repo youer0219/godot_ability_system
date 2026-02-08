@@ -11,6 +11,9 @@ var _node_memory: Dictionary = {}
 signal value_changed(key: String, value: Variant)
 signal value_cleared()
 
+func _init(data_defaults: Dictionary = {}) -> void:
+	_data = data_defaults.duplicate()
+
 func set_var(key: String, value: Variant) -> void:
 	var old_value = _data.get(key)
 	# 只有值真的改变了才发信号，避免死循环和性能浪费
