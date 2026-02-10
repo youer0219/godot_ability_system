@@ -3,11 +3,8 @@ class_name GAS_BTActivateAbility
 
 ## 要激活的技能 ID
 @export var ability_id: StringName = &""
-<<<<<<< HEAD
 ## [配置] 目标在黑板中的 Key
 @export var input_target_key: String = "target"
-=======
->>>>>>> 905903ff0624dcc28fc6cc8e8573ffba41256c0d
 ## 是否等待技能执行完成
 ## true: 节点会保持 RUNNING 直到技能结束
 ## false: 技能激活成功后立即返回 SUCCESS
@@ -53,7 +50,7 @@ func _enter(instance: GAS_BTInstance) -> void:
 	var input_target = _get_var(instance, input_target_key)
 	if is_instance_valid(input_target):
 		context["input_target"] = input_target
-    	
+		
 	# 先检查是否满足激活条件（如冷却、消耗、标签限制等）
 	# 避免直接调用 try_activate_ability 可能产生的副作用或不必要的逻辑执行
 	if not comp.can_activate_ability(ability_id, context):
