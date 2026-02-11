@@ -1,5 +1,5 @@
 extends AreaHitDetectorBase
-class_name AreaHitDetector
+class_name AreaHitDetector3D
 
 ## 区域命中检测器（物理检测）
 ## 适用于：AOE技能、非指向性技能、地雷、暴风雪
@@ -37,31 +37,31 @@ func _get_targets(caster: Node, context: Dictionary = {}) -> Array[Node]:
 			if context.has("target_position") and context["target_position"] is Vector3:
 				detection_position = context["target_position"] as Vector3
 			else:
-				push_warning("AreaHitDetector: TARGET_POSITION source selected but target_position not found in context")
+				push_warning("AreaHitDetector3D: TARGET_POSITION source selected but target_position not found in context")
 				detection_position = Vector3.ZERO
 		DetectionPositionSource.HIT_POSITION:
 			# 使用命中位置（投射物爆炸位置）
 			if context.has("hit_position") and context["hit_position"] is Vector3:
 				detection_position = context["hit_position"] as Vector3
 			else:
-				push_warning("AreaHitDetector: HIT_POSITION source selected but hit_position not found in context")
+				push_warning("AreaHitDetector3D: HIT_POSITION source selected but hit_position not found in context")
 				detection_position = Vector3.ZERO
 		DetectionPositionSource.DETECTION_POSITION:
 			# 使用显式指定的检测位置（通过 context["detection_position"] 传递）
 			if context.has("detection_position") and context["detection_position"] is Vector3:
 				detection_position = context["detection_position"] as Vector3
 			else:
-				push_warning("AreaHitDetector: DETECTION_POSITION source selected but detection_position not found in context")
+				push_warning("AreaHitDetector3D: DETECTION_POSITION source selected but detection_position not found in context")
 				detection_position = Vector3.ZERO
 		_:
-			push_warning("AreaHitDetector: Unknown detection_position_source: %d" % position_source)
+			push_warning("AreaHitDetector3D: Unknown detection_position_source: %d" % position_source)
 			detection_position = Vector3.ZERO
 
 	# 调试信息
 	if detection_position == Vector3.ZERO:
-		print("AreaHitDetector: WARNING - Using Vector3.ZERO as detection position! Source: %d" % position_source)
+		print("AreaHitDetector3D: WARNING - Using Vector3.ZERO as detection position! Source: %d" % position_source)
 	else:
-		print("AreaHitDetector: Using detection position: %s (Source: %d)" % [detection_position, position_source])
+		print("AreaHitDetector3D: Using detection position: %s (Source: %d)" % [detection_position, position_source])
 
 	# 确定检测半径（允许上下文覆盖）
 	var radius = context.get("detection_radius", detection_radius)
@@ -99,11 +99,11 @@ func _get_targets(caster: Node, context: Dictionary = {}) -> Array[Node]:
 
 	# 调试信息
 	if results.is_empty():
-		print("AreaHitDetector: No results found. Position: %s, Radius: %.2f, Mask: %d, CollideWithBodies: %s, CollideWithAreas: %s" % [
+		print("AreaHitDetector3D: No results found. Position: %s, Radius: %.2f, Mask: %d, CollideWithBodies: %s, CollideWithAreas: %s" % [
 			detection_position, radius, mask, query.collide_with_bodies, query.collide_with_areas
 		])
 	else:
-		print("AreaHitDetector: Found %d results" % results.size())
+		print("AreaHitDetector3D: Found %d results" % results.size())
 	
 	# 转换结果为实体列表
 	var valid_targets: Array[Node] = []
@@ -114,11 +114,11 @@ func _get_targets(caster: Node, context: Dictionary = {}) -> Array[Node]:
 			continue
 			
 		# 调试信息：打印检测到的碰撞体
-		print("AreaHitDetector: Found collider: %s (type: %s)" % [collider.name, collider.get_class()])
+		print("AreaHitDetector3D: Found collider: %s (type: %s)" % [collider.name, collider.get_class()])
 
 		var entity = collider.get_parent()
 		if not is_instance_valid(entity):
-			print("AreaHitDetector: Failed to get entity from collider: %s" % collider.name)
+			print("AreaHitDetector3D: Failed to get entity from collider: %s" % collider.name)
 			continue
 
 		# 避免重复添加同一实体
@@ -128,7 +128,7 @@ func _get_targets(caster: Node, context: Dictionary = {}) -> Array[Node]:
 
 		processed_entities[entity_id] = true
 		valid_targets.append(entity)
-		print("AreaHitDetector: Added target: %s" % entity.name)
+		print("AreaHitDetector3D: Added target: %s" % entity.name)
 		
 	return valid_targets
 

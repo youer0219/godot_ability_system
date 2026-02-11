@@ -3,7 +3,7 @@ class_name AreaTargetingStrategy
 
 ## 范围目标策略
 ## 适用于：AOE技能、范围伤害、区域效果
-## 使用 AreaHitDetector 检测范围内的所有目标
+## 使用 AreaHitDetectorBase 检测范围内的所有目标
 
 @export var hit_detector: AreaHitDetectorBase = null  ## 区域命中检测器
 
