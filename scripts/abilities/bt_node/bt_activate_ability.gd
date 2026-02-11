@@ -9,7 +9,7 @@ class_name GAS_BTActivateAbility
 ## 默认映射: 
 ## - input_target: 映射到 target (单体目标)
 ## - targets: 映射到 targets (复数目标)
-@export var context_mapping: Dictionary = {
+@export var context_mapping: Dictionary[String, String] = {
 	"input_target": "target",
 	"targets": "targets" 
 }
@@ -59,12 +59,12 @@ func _enter(instance: GAS_BTInstance) -> void:
 	# 这包括 input_target, targets 以及其他任何自定义参数
 	for context_key in context_mapping:
 		var blackboard_key = context_mapping[context_key]
-		if blackboard_key is String:
-			# [修改] 只有当黑板中确实存在该 Key 时才传递
-			# 避免传递 null 覆盖了技能默认值，或者产生意外的空数据
-			if _has_var(instance, blackboard_key):
-				var value = _get_var(instance, blackboard_key)
-				context[context_key] = value
+		
+		# 只有当黑板中确实存在该 Key 时才传递
+		# 避免传递 null 覆盖了技能默认值，或者产生意外的空数据
+		if _has_var(instance, blackboard_key):
+			var value = _get_var(instance, blackboard_key)
+			context[context_key] = value
 		
 	# 先检查是否满足激活条件（如冷却、消耗、标签限制等）
 	# 避免直接调用 try_activate_ability 可能产生的副作用或不必要的逻辑执行
