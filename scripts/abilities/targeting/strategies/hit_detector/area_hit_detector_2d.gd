@@ -7,7 +7,10 @@ class_name AreaHitDetector2D
 
 @export_group("Area Settings")
 # detection_radius 在基类定义
-@export var detection_shape: Shape2D = null  ## 自定义检测形状（如果为null，使用圆形）
+@export var detection_shape: Shape2D = null:
+	set(value):
+		detection_shape = value
+		notify_property_list_changed()
 @export_flags_2d_physics 
 var collision_mask: int = 0 | 4  ## 碰撞遮罩
 # detection_position_source 在基类定义

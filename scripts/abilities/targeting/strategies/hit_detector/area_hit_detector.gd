@@ -7,7 +7,10 @@ class_name AreaHitDetector
 
 @export_group("Area Settings")
 # detection_radius 在基类定义
-@export var detection_shape: Shape3D = null  ## 自定义检测形状（如果为null，使用球形）
+@export var detection_shape: Shape3D = null:
+	set(value):
+		detection_shape = value
+		notify_property_list_changed()
 @export_flags_3d_physics 
 var collision_mask: int = 0 | 4  ## 碰撞遮罩
 # detection_position_source 在基类定义

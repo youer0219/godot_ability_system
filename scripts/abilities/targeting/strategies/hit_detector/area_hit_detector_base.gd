@@ -14,7 +14,7 @@ enum DetectionPositionSource {
 }
 
 @export_group("Area Settings")
-@export var detection_radius: float = 3.0  ## 检测半径（3D单位：米，2D单位：像素）
+var detection_radius: float = 3.0  ## 检测半径（3D单位：米，2D单位：像素）
 @export var detection_position_source: DetectionPositionSource = DetectionPositionSource.CASTER_POSITION  ## 检测位置来源
 
 @export_group("Query Settings")
@@ -36,3 +36,21 @@ func _get_source_name() -> String:
 
 func _get_description() -> String:
 	return "Area Detector (Radius: %.1f, Source: %s)" % [detection_radius, _get_source_name()]
+
+# region 属性导出优化
+func _get_property_list() -> Array[Dictionary]:
+	var properties: Array[Dictionary] = []
+	
+	# 如果没有定义检测形状，则导出检测半径
+	var shape = get("detection_shape")
+	if not is_instance_valid(shape):
+		properties.append({
+			"name": "detection_radius",
+			"type": TYPE_FLOAT,
+			"usage": PROPERTY_USAGE_DEFAULT,
+			"hint": PROPERTY_HINT_RANGE,
+			"hint_string": "0.1, 1000.0, 0.1"
+		})
+	
+	return properties
+# endregion
