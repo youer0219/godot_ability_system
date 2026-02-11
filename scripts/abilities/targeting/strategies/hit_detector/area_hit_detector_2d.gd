@@ -93,5 +93,17 @@ func _get_targets(caster: Node, context: Dictionary = {}) -> Array[Node]:
 			
 	return targets
 
+func _get_property_list() -> Array[Dictionary]:
+	var properties: Array[Dictionary] = []
+	if not is_instance_valid(detection_shape):
+		properties.append({
+			"name": "detection_radius",
+			"type": TYPE_FLOAT,
+			"usage": PROPERTY_USAGE_DEFAULT,
+			"hint": PROPERTY_HINT_RANGE,
+			"hint_string": "0.1, 1000.0, 0.1"
+		})
+	return properties
+
 func _get_description() -> String:
 	return "Area Hit Detector 2D (Radius: %.1f, Mask: %d, Source: %s)" % [detection_radius, collision_mask, _get_source_name()]
