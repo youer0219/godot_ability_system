@@ -14,7 +14,7 @@ class_name ActiveAbilityDefinition
 @export var pre_cast_delay : float = 0.0
 ## 技能后摇时间 (伤害生效后的僵直)
 @export var post_cast_delay : float = 0.0
-## 技能冷却时间
+## 技能冷却时间（技能前摇结束后生效）
 @export var cooldown_duration : float = 0.0
 ## 技能消耗
 @export var costs : Array[AbilityCostBase] = []
