@@ -40,7 +40,6 @@ func _get_targets(caster: Node, context: Dictionary = {}) -> Array[Node]:
 				push_warning("AreaHitDetector3D: TARGET_POSITION source selected but target_position not found in context")
 				detection_position = Vector3.ZERO
 		DetectionPositionSource.HIT_POSITION:
-			# 使用命中位置（投射物爆炸位置）
 			if context.has("hit_position") and context["hit_position"] is Vector3:
 				detection_position = context["hit_position"] as Vector3
 			else:
@@ -62,6 +61,9 @@ func _get_targets(caster: Node, context: Dictionary = {}) -> Array[Node]:
 		print("AreaHitDetector3D: WARNING - Using Vector3.ZERO as detection position! Source: %d" % position_source)
 	else:
 		print("AreaHitDetector3D: Using detection position: %s (Source: %d)" % [detection_position, position_source])
+	
+	var offset: Vector3 = context.get(offset_key, Vector3.ZERO)
+	detection_position += offset
 
 	# 确定检测半径（允许上下文覆盖）
 	var radius = context.get("detection_radius", detection_radius)
@@ -84,8 +86,8 @@ func _get_targets(caster: Node, context: Dictionary = {}) -> Array[Node]:
 	query.shape = shape
 	query.transform = Transform3D(Basis(), detection_position)
 	query.collision_mask = mask
-	query.collide_with_bodies = true  # 检测刚体（CharacterBody3D, RigidBody3D等）
-	query.collide_with_areas = true   # 检测区域（Area3D，如Hurtbox）
+	query.collide_with_bodies = include_bodies
+	query.collide_with_areas = include_areas
 
 	# 是否排除施法者（允许上下文覆盖）
 	var should_exclude_caster = context.get("exclude_caster", exclude_caster)

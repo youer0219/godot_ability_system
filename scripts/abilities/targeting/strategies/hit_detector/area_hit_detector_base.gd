@@ -16,10 +16,13 @@ enum DetectionPositionSource {
 @export_group("Area Settings")
 var detection_radius: float = 3.0  ## 检测半径（3D单位：米，2D单位：像素）
 @export var detection_position_source: DetectionPositionSource = DetectionPositionSource.CASTER_POSITION  ## 检测位置来源
+@export var offset_key: String = "detection_offset"
 
 @export_group("Query Settings")
 @export var max_results: int = 32  ## 最大检测结果数量
 @export var exclude_caster: bool = true  ## 是否排除施法者自己（false 时，施法者也会被检测到，适用于治疗光环、群体Buff等）
+@export var include_bodies: bool = true
+@export var include_areas: bool = true
 
 ## [子类重写] 检测目标的具体实现
 @abstract func _get_targets(caster: Node, context: Dictionary) -> Array[Node]

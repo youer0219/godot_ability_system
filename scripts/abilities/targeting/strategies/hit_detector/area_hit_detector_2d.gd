@@ -53,13 +53,16 @@ func _get_targets(caster: Node, context: Dictionary = {}) -> Array[Node]:
 				detection_position = context["detection_position"] as Vector2
 			else:
 				detection_position = Vector2.ZERO
+	
+	var offset: Vector2 = context.get(offset_key, Vector2.ZERO)
+	detection_position += offset
 
 	# 执行物理查询
 	var space_state = caster_2d.get_world_2d().direct_space_state
 	var query = PhysicsShapeQueryParameters2D.new()
 	
-	query.collide_with_areas = true
-	query.collide_with_bodies = true
+	query.collide_with_areas = include_areas
+	query.collide_with_bodies = include_bodies
 	query.collision_mask = collision_mask
 	
 	if is_instance_valid(detection_shape):
