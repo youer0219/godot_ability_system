@@ -36,6 +36,3 @@ func _get_source_name() -> String:
 		DetectionPositionSource.DETECTION_POSITION: "Explicit"
 	}
 	return source_names.get(detection_position_source, "Unknown")
-
-func _get_description() -> String:
-	return "Area Detector (Radius: %.1f, Source: %s)" % [detection_radius, _get_source_name()]
