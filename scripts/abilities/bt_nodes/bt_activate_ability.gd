@@ -11,15 +11,14 @@ const CACHE_KEY_ABILITY_COMPONENT = "_gameplay_ability_component_ref"
 ## 如果为空，将尝试自动查找
 @export var ability_component_path: NodePath = ^""
 
+## [可选] 指定 Blackboard Key 来获取 GameplayAbilityComponent 的路径
+## 如果设置了此 Key，且 ability_component_path 为空，将尝试从 Blackboard 读取该 Key 的值。
+## 值通常是 NodePath，也可以直接是组件实例。
+@export var ability_component_node_path_key: StringName = &"ability_component_path"
+
 ## [配置] 黑板变量映射到 Context (Key: Context中的Key, Value: 黑板中的Key)
 ## 例如: {"threat_level": "threat", "custom_param": "my_var"}
-## 默认映射: 
-## - input_target: 映射到 target (单体目标)
-## - targets: 映射到 targets (复数目标)
-@export var context_mapping: Dictionary[String, String] = {
-	"input_target": "target",
-	"targets": "targets" 
-}
+@export var context_mapping: Dictionary[String, String] = {}
 ## 是否等待技能执行完成
 ## true: 节点会保持 RUNNING 直到技能结束
 ## false: 技能激活成功后立即返回 SUCCESS
@@ -98,17 +97,30 @@ func _exit(instance: GAS_BTInstance) -> void:
 	_clear_storage(instance)
 
 func _get_ability_component(instance: GAS_BTInstance) -> GameplayAbilityComponent:
-	# 1. 尝试从 Blackboard 获取缓存的实例
+	# 1. [最高优先级] 尝试从 Blackboard 获取缓存的实例
+	# 只要之前找到过一次并缓存了，就直接用，避免重复查找
 	var cached_comp = instance.blackboard.get_var(CACHE_KEY_ABILITY_COMPONENT, null)
 	if is_instance_valid(cached_comp) and cached_comp is GameplayAbilityComponent:
 		return cached_comp
 
-	# 2. 如果没有缓存或无效，则执行查找逻辑
+	# 2. [次优先级] 如果配置了固定的 NodePath，优先使用
 	if not ability_component_path.is_empty():
 		var node = instance.owner_node.get_node_or_null(ability_component_path)
 		if node is GameplayAbilityComponent:
 			instance.blackboard.set_var(CACHE_KEY_ABILITY_COMPONENT, node)
 			return node
+			
+	# 3. [低优先级] 尝试从用户指定的 Blackboard Key 获取路径或实例
+	# 这允许动态指定组件，在复用时NodePath不一时，有奇效
+	if not ability_component_node_path_key.is_empty():
+		var custom_val = instance.blackboard.get_var(ability_component_node_path_key, null)
+			
+		# 如果是 NodePath，则尝试获取节点
+		if custom_val is NodePath and not custom_val.is_empty():
+			var node = instance.owner_node.get_node_or_null(custom_val)
+			if node is GameplayAbilityComponent:
+				instance.blackboard.set_var(CACHE_KEY_ABILITY_COMPONENT, node)
+				return node
 	
 	push_warning("GAS_BTActivateAbility: GameplayAbilityComponent not found on agent %s (Ability: %s)" % [instance.agent, ability_id])
 	return null
