@@ -5,8 +5,15 @@ class_name AttributeInjectionFeature
 ## 负责将角色的属性值（如攻击范围、暴击率、移动速度等）注入到技能上下文（Context）和黑板（Blackboard）中
 ## 使得后续的技能逻辑（如检测器、伤害计算、投射物生成）能够动态读取这些属性
 
-@export var attribute_name: StringName = &"" ## 属性名
-@export var context_key: String = "" ## 注入到 Context 的 Key
+@export var attribute_name: StringName = &"": ## 属性名
+	set(value):
+		attribute_name = value
+		_update_feature_name()
+
+@export var context_key: String = "": ## 注入到 Context 的 Key
+	set(value):
+		context_key = value
+		_update_feature_name()
 
 @export var default_value: float = 0.0 ## 默认值
 @export var min_value: float = -INF ## 最小值限制
@@ -20,6 +27,14 @@ class_name AttributeInjectionFeature
 
 func _init() -> void:
 	super("AttributeInjectionFeature")
+
+func _update_feature_name() -> void:
+	if not attribute_name.is_empty():
+		feature_name = "AttributeInjectionFeature_" + str(attribute_name)
+	elif not context_key.is_empty():
+		feature_name = "AttributeInjectionFeature_" + context_key
+	else:
+		feature_name = "AttributeInjectionFeature"
 
 func on_activate(ability: GameplayAbilityInstance, context: Dictionary) -> void:
 	var instigator = context.get("instigator")
