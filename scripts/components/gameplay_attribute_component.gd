@@ -42,7 +42,7 @@ func initialize(sets: Array[GameplayAttributeSet] = []) -> void:
 ## [return] float 属性值
 func get_value(id: StringName, default: float = 0.0) -> float:
 	if not has_attribute(id):
-		#push_warning("GameplayAttributeComponent: Attribute with id %s not found" % id)
+		push_warning("GameplayAttributeComponent: Attribute with id %s not found" % id)
 		return default
 	return _attributes[id].get_value()
 
@@ -52,7 +52,7 @@ func get_value(id: StringName, default: float = 0.0) -> float:
 ## [return] float 属性基础值
 func get_base_value(id: StringName, default: float = 0.0) -> float:
 	if not has_attribute(id):
-		#push_warning("GameplayAttributeComponent: Attribute with id %s not found" % id)
+		push_warning("GameplayAttributeComponent: Attribute with id %s not found" % id)
 		return default
 	return _attributes[id].base_value
 
@@ -62,10 +62,12 @@ func get_base_value(id: StringName, default: float = 0.0) -> float:
 ## [return] float 比例值
 func get_attribute_ratio(id: StringName, default_ratio: float = 1.0) -> float:
 	if not has_attribute(id):
+		push_warning("GameplayAttributeComponent: Attribute with id %s not found, returning default ratio" % id)
 		return default_ratio
 		
 	var base = _attributes[id].base_value
 	if is_zero_approx(base):
+		push_warning("GameplayAttributeComponent: Base value of attribute %s is zero, returning default ratio" % id)
 		return default_ratio
 		
 	return _attributes[id].get_value() / base
