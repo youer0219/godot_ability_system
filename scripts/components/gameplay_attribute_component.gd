@@ -42,9 +42,19 @@ func initialize(sets: Array[GameplayAttributeSet] = []) -> void:
 ## [return] float 属性值
 func get_value(id: StringName, default: float = 0.0) -> float:
 	if not has_attribute(id):
-		push_warning("GameplayAttributeComponent: Attribute with id %s not found" % id)
+		#push_warning("GameplayAttributeComponent: Attribute with id %s not found" % id)
 		return default
 	return _attributes[id].get_value()
+
+## 获取属性基础值
+## [param] id: StringName 属性ID
+## [param] default: float 默认值（如果属性不存在）
+## [return] float 属性基础值
+func get_base_value(id: StringName, default: float = 0.0) -> float:
+	if not has_attribute(id):
+		#push_warning("GameplayAttributeComponent: Attribute with id %s not found" % id)
+		return default
+	return _attributes[id].base_value
 
 ## 获取属性实例
 ## [param] id: StringName 属性ID
