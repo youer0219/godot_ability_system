@@ -15,6 +15,9 @@ class_name AttributeInjectionFeature
 ## 是否同时注入到黑板
 @export var inject_to_blackboard: bool = false
 
+## 属性组件名称，默认为 "GameplayVitalAttributeComponent"
+@export var attribute_component_name: StringName = &"GameplayVitalAttributeComponent"
+
 func _init() -> void:
 	super("AttributeInjectionFeature")
 
@@ -24,7 +27,7 @@ func on_activate(ability: GameplayAbilityInstance, context: Dictionary) -> void:
 		return
 	
 	# 尝试获取属性组件
-	var attr_comp = GameplayAbilitySystem.get_component_by_interface(instigator, "GameplayVitalAttributeComponent")
+	var attr_comp = GameplayAbilitySystem.get_component_by_interface(instigator, attribute_component_name)
 	if not is_instance_valid(attr_comp):
 		return
 
