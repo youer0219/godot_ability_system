@@ -39,6 +39,10 @@ func apply_status(gsd: GameplayStatusData, instigator: Node, stacks: int = 1, co
 		push_error("GameplayStatusComponent: GameplayStatusData is not valid!")
 		return null
 	
+	# 将 instigator 放入 context，以便堆叠策略等可以使用
+	if is_instance_valid(instigator) and not context.has("instigator"):
+		context["instigator"] = instigator
+	
 	var status_id: StringName = gsd.status_id
 	# 空 ID：仅执行一次性效果，不入表
 	if status_id.is_empty():
@@ -49,7 +53,7 @@ func apply_status(gsd: GameplayStatusData, instigator: Node, stacks: int = 1, co
 		return null
 
 	# 2. 堆叠策略
-	if _apply_stacking_for_existing_status(status_id, gsd, stacks):
+	if _apply_stacking_for_existing_status(status_id, gsd, stacks, context):
 		return null
 
 	# 3. 创建并应用新实例
@@ -133,7 +137,7 @@ func handle_event(event_id: StringName, context: Dictionary) -> void:
 	for status_id in statuses_to_remove:
 		remove_status(status_id)
 
-func _apply_stacking_for_existing_status(status_id: StringName, gsd: GameplayStatusData, stacks: int) -> bool:
+func _apply_stacking_for_existing_status(status_id: StringName, gsd: GameplayStatusData, stacks: int, context: Dictionary) -> bool:
 	if not _active_statuses.has(status_id):
 		return false
 
@@ -144,7 +148,8 @@ func _apply_stacking_for_existing_status(status_id: StringName, gsd: GameplaySta
 	
 	# 使用策略模式处理堆叠
 	if is_instance_valid(gsd) and is_instance_valid(gsd.stacking_policy):
-		var context = {}
+		# 在执行堆叠策略前，先更新实例的上下文（包括 instigator）
+		existing_instance.update_context(context)
 		return gsd.stacking_policy.handle_stacking(existing_instance, gsd, stacks, context)
 
 	return true
