@@ -163,6 +163,11 @@ func accumulate_duration() -> void:
 	if is_instance_valid(_duration_policy) and status_data.duration > 0:
 		_duration_policy.accumulate(self, status_data.duration)
 
+## 更新运行时上下文
+## 用于在堆叠时更新状态的上下文信息（如施法者、命中位置等）
+func update_context(context: Dictionary) -> void:	
+	_cached_context.merge(context, true)
+
 ## 应用方法（公开）
 func apply_effects(effects: Array[GameplayEffect], context: Dictionary = {}) -> void:
 	_apply_effects(effects, context)
